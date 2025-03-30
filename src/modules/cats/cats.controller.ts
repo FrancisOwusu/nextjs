@@ -1,14 +1,17 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Header,
   HttpCode,
   HttpException,
   HttpStatus,
   Param,
+  ParseIntPipe,
   Post,
   Query,
+  RawBody,
   Redirect,
   Req,
 } from "@nestjs/common";
@@ -39,6 +42,33 @@ export class CatsController {
 
     // return this.catService.findAll();
   }
+  @Post()
+  create(@Body() createUserDto: CreateCatDto): Promise<Cat> {
+    return this.catService.create(createUserDto);
+  }
+
+ 
+
+  @Get(':id')
+  findOne(@Param('id', ParseIntPipe) id: number): Promise<Cat> {
+    return this.catService.findOne(id);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: number): Promise<void> {
+    return this.catService.remove(id);
+  }
+
+
+
+
+
+
+
+
+
+
+
   /*async findAll(@Query("age") age: number, @Query("breed") breed: string) {
     return `This action returns all cats filtered by age: ${age} and breed: ${breed}`;
   }
@@ -50,10 +80,7 @@ export class CatsController {
       return [];
     } */
   
-  @Post()
-  async create(@Body() createCatDto: CreateCatDto){
-    return this.catService.create(createCatDto);
-  }
+ 
 
   /*@Post()
   @HttpCode(204)
@@ -66,7 +93,11 @@ export class CatsController {
   //   create(): string {
   //     return "Create a post";
   //   }
-
+  /*@Post()
+  async create(@Body() createCatDto: CreateCatDto){
+    return RawBody();
+    return this.catService.create(createCatDto);
+  }
   getDocs(@Query("version") version) {
     if (version && version === "5") {
       return { url: "https://docs.nestjs.com/v5/" };
@@ -83,4 +114,5 @@ export class CatsController {
     console.log(id);
     return `This action return a #${id} cat`;
   }
+    */
 }

@@ -7,6 +7,7 @@ import configuration from './configuration';
       envFilePath: ['.env.development.local', '.env.development'],
       isGlobal: true, // This makes the ConfigModule available throughout the app
       ignoreEnvFile:false,
+      expandVariables:true,
       load:[configuration]
     }),
   ],

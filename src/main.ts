@@ -9,6 +9,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   //bind middleware at once
   app.use(logger)
+  console.log(process.env.URL);
   await app.listen(process.env.PORT || 3000);
 }
 bootstrap();
