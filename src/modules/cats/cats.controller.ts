@@ -9,6 +9,7 @@ import {
   HttpStatus,
   Param,
   ParseIntPipe,
+  Patch,
   Post,
   Query,
   RawBody,
@@ -19,6 +20,7 @@ import { CreateCatDto } from "./dto/create-cat.dto";
 import { CatsService } from "./cats.service";
 import { Cat } from "./interfaces/cat.interface";
 import { ForbiddenException } from "forbiddent.exception";
+import { UpdateCatDto } from "./dto/update-cat.dto";
 
 @Controller("cats")
 export class CatsController {
@@ -53,6 +55,11 @@ export class CatsController {
   findOne(@Param('id', ParseIntPipe) id: number): Promise<Cat> {
     return this.catService.findOne(id);
   }
+
+    @Patch(':id')
+    update(@Param('id') id: string, @Body() updateUserDto: UpdateCatDto) {
+      return this.catService.update(+id, updateUserDto);
+    }
 
   @Delete(':id')
   remove(@Param('id') id: number): Promise<void> {

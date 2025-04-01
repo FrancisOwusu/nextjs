@@ -9,6 +9,8 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { DataSource } from "typeorm";
 import { Cat } from "./database/entities/cat.entity";
 import { User } from "./database/entities/user.entity";
+import { AppDataSource } from "data_source";
+import { AuthModule } from './auth/auth.module';
 const defaultOptions = {
   type: 'postgres',
   port: 5432,
@@ -35,30 +37,10 @@ const defaultMysqlOptions = {
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-    type: 'mysql',
-    host: 'localhost',
-    port: 3306,
-    username: 'root',
-    password: '',
-    database: 'nestjsapp',
-    entities: [Cat,User],
-    synchronize: true,
-
-
-
-
-    // type: 'postgres',
-    // host: process.env.DATABASE_HOST,
-    // port: parseInt(process.env.DATABASE_PORT, 5432),
-    // username: process.env.DATABASE_USER,
-    // password: process.env.DATABASE_PASSWORD,
-    // database: process.env.DATABASE_NAME,
-    // synchronize: false,
-    // entities: [__dirname + '/database/core/**/*.entity{.ts,.js}'],
-    autoLoadEntities: true,
-  }),
-    UsersModule, CatsModule,ConfigModule.forRoot(  )],
+    TypeOrmModule.forRoot(AppDataSource.options,
+      
+    ),
+    UsersModule, CatsModule,ConfigModule.forRoot(  ), AuthModule],
     // controllers:[CatsController],
   providers: [CatsService],
 })
